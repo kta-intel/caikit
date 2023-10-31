@@ -4,6 +4,10 @@ caikit[runtime-grpc, runtime-http]
 scipy
 torch
 transformers~=4.27.2
+# For Intel(R) Extension for PyTorch*
+intel_extension_for_pytorch
 
 # For http client
 requests
+
+

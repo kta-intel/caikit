@@ -16,7 +16,8 @@
 import os
 
 # Third Party
-from transformers import pipeline  # pylint: disable=import-error
+from transformers import pipeline  # pylint: disable=import-errortor
+import torch
 
 # Local
 from caikit.core import ModuleBase, ModuleLoader, ModuleSaver, TaskBase, module, task
@@ -45,6 +46,12 @@ class HuggingFaceSentimentModule(ModuleBase):
         loader = ModuleLoader(model_path)
         config = loader.config
         model = pipeline(model=config.hf_artifact_path, task="sentiment-analysis")
+        if config.backend == "ipex":
+            ## Enable Intel(R) Extension for PyTorch ##
+            print("Intel(R) Extension for PyTorch* enabled")
+            import intel_extension_for_pytorch as ipex
+            model.model = ipex.optimize(model.model)
+            # model.model = ipex.optimize_transformer(model.model)
         self.sentiment_pipeline = model
 
     def run(  # pylint: disable=arguments-differ
@@ -67,7 +74,7 @@ class HuggingFaceSentimentModule(ModuleBase):
 
     @classmethod
     def bootstrap(
-        cls, model_path="distilbert-base-uncased-finetuned-sst-2-english"
+        cls, model_path
     ):  # pylint: disable=arguments-differ
         """Load a HuggingFace based caikit model
         Args:

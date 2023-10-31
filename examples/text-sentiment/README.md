@@ -1,6 +1,6 @@
 # Text Sentiment Analysis Example
 
-This example uses the [HuggingFace DistilBERT base uncased finetuned SST-2](https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english) AI model to perform text sentiment analysis. The Caikit runtime loads the model and serves it so that it can be inferred or called.
+This fork modifies this example to integrate Intel(R) Extension for PyTorch* and start the runtime server with grpc enabled. The below results have no been modified and therefore should not be referenced
 
 ## Before Starting
 
